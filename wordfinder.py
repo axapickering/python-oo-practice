@@ -6,12 +6,14 @@ class WordFinder:
 
     def __init__(self, path):
         """ construct a word finder"""
+
         self.path = path
-        self.get_word_list()
+        self.word_list = self.get_word_list()
         self.print_word_count()
 
     def __repr__(self):
         return f"<Word Finder path={self.path}>"
+    # add word count
 
 
     def random(self):
@@ -22,34 +24,26 @@ class WordFinder:
 
     def get_word_list(self):
         """creates a list of words from the path """
+
         word_list = []
         with open(self.path, 'r') as file:
+        # return [line.strip() for line in file]
             for line in file:
-                line = line.strip()
-                word_list.append(line)
-        self.word_list = word_list
-
-        file.close()
-
+                word_list.append(line.strip())
+        return word_list
 
     def print_word_count(self):
         """print out the count of words"""
 
         print(f"{len(self.word_list)} words read")
 
-class RandomWordFinder(WordFinder):
+class SpecialWordFinder(WordFinder):
     '''subclass of WordFinder that can handle empty lines and comments'''
 
     def get_word_list(self):
         """creates a list of words from the path """
-        word_list = []
-        super().get_word_list()
 
-        # for line in self.word_list:
-            # if line.startswith('#')
+        word_list = super().get_word_list()
 
-
-        self.word_list = word_list
-        print(f"{len(word_list)} words read")
-        file.close()
-        #TODO:shouldn't open the file again/start with what the parent
+        return [word for word in word_list if len(word.strip()) > 0 and word[0] != "#"]
+    # if word is not emptystring
